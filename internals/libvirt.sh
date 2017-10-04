@@ -17,10 +17,11 @@ extract_libvirt() {
 
 prepare_libvirt() {
     echo "[+] preparing libvirt"
-    ./configure --prefix=/ \
+    # PKG_CONFIG_PATH=/usr/local/armv6j-hardfloat-linux-gnueabi/lib/pkgconfig/
+    ./configure --prefix=/usr/local/armv6j-hardfloat-linux-gnueabi \
         --with-qemu \
-        --with-fuse \
-        --with-yajl \
+        --without-fuse \ # FIXME
+        --without-yajl \ # FIXME
         --with-init-script=none \
         --with-sysctl=no \
         --without-apparmor \
@@ -56,7 +57,10 @@ prepare_libvirt() {
         --without-storage-zfs \
         --without-wireshark-dissector \
         --without-pm-utils \
-        --without-firewalld
+        --without-firewalld \
+        --without-macvtap \ # FIXME
+        --build=x86_64-linux-gnu \
+        --host=armv6j-hardfloat-linux-gnueabi
 }
 
 compile_libvirt() {

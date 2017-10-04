@@ -15,7 +15,17 @@ extract_parted() {
 
 prepare_parted() {
     echo "[+] configuring parted"
-    ./configure --prefix "${ROOTDIR}"/usr --disable-device-mapper
+
+    export CFLAGS="-I${ROOTDIR}/usr/include"
+    export CPPFLAGS=$CFLAGS
+
+    export LDFLAGS="-Wl,-rpath-link,${ROOTDIR}/usr/lib -L${ROOTDIR}/usr/lib"
+
+    ./configure --prefix "${ROOTDIR}"/usr \
+        --build ${BUILDCOMPILE} \
+        --host ${BUILDHOST} \
+        --disable-device-mapper \
+        --without-readline
 
     if [ ! -f .patched_parted-3.2-devmapper.patch ]; then
         echo "[+] applying patch"

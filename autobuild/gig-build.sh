@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+echo "Build disabled, this is a staging cross-compiling branch"
+exit 1
+
 if [ "$1" == "" ] || [ "$2" == "" ]; then
     echo "[-] missing remote version or repository name"
     exit 1

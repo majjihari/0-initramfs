@@ -20,11 +20,12 @@ prepare_busybox() {
 
 compile_busybox() {
     echo "[+] compiling busybox"
-    make ${MAKEOPTS}
+    # make ${MAKEOPTS}
+    make ARCH=arm CROSS_COMPILE=armv6j-hardfloat-linux-gnueabi- ${MAKEOPTS}
 }
 
 install_busybox() {
-    make install
+    make ARCH=arm CROSS_COMPILE=armv6j-hardfloat-linux-gnueabi- install
     cp -av _install/* "${ROOTDIR}/"
 }
 

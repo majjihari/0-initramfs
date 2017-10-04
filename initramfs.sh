@@ -13,6 +13,12 @@ INTERNAL="${PWD}/internals/"
 EXTENDIR="${PWD}/extensions/"
 PATCHESDIR="${PWD}/patches/"
 
+# architechture you run now (--build option during configure)
+BUILDCOMPILE="x86_64-linux-gnu"
+
+# architechture result will run on (--host option during configure script)
+BUILDHOST="armv6j-hardfloat-linux-gnueabi"
+
 # By default, we compiles with (number of cpu threads + 1)
 # you can changes this to reduce computer load
 JOBS=$(($(grep -c 'bogomips' /proc/cpuinfo) + 1))
@@ -561,27 +567,27 @@ main() {
     fi
 
     if [[ $DO_ALL == 1 ]] || [[ $DO_TOOLS == 1 ]]; then
-        build_fuse
-        build_openssl
-        build_certs
-        build_parted
-        build_linuxutil
-        build_btrfs
-        build_zerotier
-        build_dnsmasq
-        build_nftables
-        build_iproute2
-        build_socat
-        build_qemu
-        build_libvirt
-        build_dmidecode
-        build_unionfs
-        build_gorocksdb
-        build_eudev
-        build_kmod
-        build_openssh
-        build_smartmon
-        build_netcat
+        ## build_fuse
+        # build_openssl
+        ## build_certs
+        ## bibuild_parted
+        ## build_linuxutil
+        # build_btrfs
+        # build_zerotier
+        # build_dnsmasq
+        # build_nftables
+        # build_iproute2
+        # build_socat
+        # build_qemu
+        # build_libvirt
+        # build_dmidecode
+        # build_unionfs
+        # build_gorocksdb
+        # build_eudev
+        # build_kmod
+        # build_openssh
+        # build_smartmon
+        # build_netcat
     fi
 
     if [[ $DO_ALL == 1 ]] || [[ $DO_ORK == 1 ]]; then
@@ -598,13 +604,13 @@ main() {
     fi
 
     if [[ $DO_ALL == 1 ]] || [[ $DO_KERNEL == 1 ]] || [[ $DO_KMODULES == 1 ]]; then
-        ensure_libs
+        # ensure_libs
         clean_root
-        optimize_size
+        # optimize_size
         clean_busybox_outdated
         g8os_root
         build_kernel
-        end_summary
+        # end_summary
     fi
 }
 

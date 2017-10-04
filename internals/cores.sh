@@ -41,6 +41,7 @@ compile_cores() {
     echo "[+] compiling coreX and core0"
     pushd 0-core
     make
+    # GOOS=linux GOARCH=arm GOARM=6
     popd
 
     echo "[+] compiling 0-fs"
@@ -85,8 +86,8 @@ build_cores() {
     prepare_cores
     pushd $GOPATH/src/github.com/zero-os
 
-    compile_cores
-    install_cores
+    # compile_cores
+    # install_cores
 
     popd
 }

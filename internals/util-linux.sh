@@ -1,6 +1,7 @@
-LINUXUTILS_VERSION="2.29"
-LINUXUTILS_CHECKSUM="07b6845f48a421ad5844aa9d58edb837"
-LINUXUTILS_LINK="https://www.kernel.org/pub/linux/utils/util-linux/v2.29/util-linux-${LINUXUTILS_VERSION}.tar.xz"
+LINUXUTILS_VERSION="2.30.2"
+LINUXUTILS_BASEVERSION="2.30"
+LINUXUTILS_CHECKSUM="23a5dce0030144a42676b92310026bac"
+LINUXUTILS_LINK="https://www.kernel.org/pub/linux/utils/util-linux/v${LINUXUTILS_BASEVERSION}/util-linux-${LINUXUTILS_VERSION}.tar.xz"
 
 download_linuxutil() {
     download_file $LINUXUTILS_LINK $LINUXUTILS_CHECKSUM
@@ -15,8 +16,13 @@ extract_linuxutil() {
 
 prepare_linuxutil() {
     echo "[+] configuring util-linux"
+    # CFLAGS="-I/usr/local/armv6j-hardfloat-linux-gnueabi/include/ncurses" ./configure --prefix "${ROOTDIR}"/usr \
+
     ./configure --prefix "${ROOTDIR}"/usr \
+        --build ${BUILDCOMPILE} \
+        --host ${BUILDHOST} \
         --disable-libfdisk \
+        --disable-libmount \
         --disable-mount \
         --disable-zramctl \
         --disable-mountpoint \
@@ -51,7 +57,10 @@ prepare_linuxutil() {
         --disable-wall \
         --disable-pylibmount \
         --disable-bash-completion \
-        --without-python
+        --without-python \
+        --without-tinfo \
+        --with-ncursesw \
+        --without-ncurses
 }
 
 compile_linuxutil() {

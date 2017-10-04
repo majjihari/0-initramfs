@@ -15,7 +15,7 @@ extract_kernel() {
 
 prepare_kernel() {
     echo "[+] copying kernel configuration"
-    cp "${CONFDIR}/build/kernel-config-generic" .config
+    # cp "${CONFDIR}/build/kernel-config-generic" .config
 
     # FIXME: add patch for secureboot
 }
@@ -23,24 +23,26 @@ prepare_kernel() {
 compile_kernel() {
     if [[ $DO_ALL == 1 ]] || [[ $DO_KMODULES == 1 ]]; then
         echo "[+] compiling the kernel (modules)"
-        make ${MAKEOPTS} modules
-        make INSTALL_MOD_PATH="${ROOTDIR}" modules_install
+        make ARCH=arm CROSS_COMPILE=armv6j-hardfloat-linux-gnueabi- ${MAKEOPTS} modules
+        make ARCH=arm CROSS_COMPILE=armv6j-hardfloat-linux-gnueabi- INSTALL_MOD_PATH="${ROOTDIR}" modules_install
         depmod -a -b "${ROOTDIR}" "${KERNEL_VERSION}-Zero-OS"
     fi
 
     if [[ $DO_ALL == 1 ]] || [[ $DO_KERNEL == 1 ]]; then
         echo "[+] compiling the kernel (vmlinuz)"
-        make ${MAKEOPTS}
+        make ARCH=arm CROSS_COMPILE=armv6j-hardfloat-linux-gnueabi- ${MAKEOPTS}
     fi
 }
 
 install_kernel() {
-    cp arch/x86/boot/bzImage "${WORKDIR}"/vmlinuz.efi
-    echo "[+] kernel installed: ${WORKDIR}/vmlinuz.efi"
+    # cp arch/x86/boot/bzImage "${WORKDIR}"/vmlinuz.efi
+    cp arch/arm/boot/zImage "${WORKDIR}"/vmlinuz.img
+    echo "[+] kernel installed: ${WORKDIR}/vmlinuz.img"
 }
 
 build_kernel() {
-    pushd "${WORKDIR}/linux-${KERNEL_VERSION}"
+    # pushd "${WORKDIR}/linux-${KERNEL_VERSION}"
+    pushd "${WORKDIR}/linux"
 
     prepare_kernel
     compile_kernel
