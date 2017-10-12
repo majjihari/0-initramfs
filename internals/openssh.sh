@@ -16,6 +16,8 @@ extract_openssh() {
 prepare_openssh() {
     echo "[+] preparing openssh"
     ./configure --prefix=/usr \
+        --build ${BUILDCOMPILE} \
+        --host ${BUILDHOST} \
         --sysconfdir=/etc/ssh \
         --without-kerberos5 \
         --without-ldns \

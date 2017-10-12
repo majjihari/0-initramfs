@@ -16,7 +16,7 @@ extract_eudev() {
 prepare_eudev() {
     echo "[+] preparing eudev"
     ./autogen.sh
-    ./configure --prefix=/ --enable-kmod --enable-blkid
+    ./configure --prefix / --enable-kmod --enable-blkid --build ${BUILDCOMPILE} --host ${BUILDHOST}
 }
 
 compile_eudev() {

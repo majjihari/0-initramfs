@@ -29,7 +29,8 @@ prepare_netcat() {
     automake --add-missing --copy --force-missing --force-missing
 
     echo "[+] configuring netcat"
-    ./configure --disable-bluez
+    ac_cv_func_malloc_0_nonnull=yes \
+        ./configure --disable-bluez --with-gnu-ld --build ${BUILDCOMPILE} --host ${BUILDHOST}
 }
 
 compile_netcat() {

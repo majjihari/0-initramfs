@@ -568,26 +568,26 @@ main() {
 
     if [[ $DO_ALL == 1 ]] || [[ $DO_TOOLS == 1 ]]; then
         ## build_fuse
-        # build_openssl
+        ### build_openssl
         ## build_certs
-        ## bibuild_parted
+        ## build_parted
         ## build_linuxutil
         # build_btrfs
         # build_zerotier
         # build_dnsmasq
-        # build_nftables
+        ## build_nftables
         # build_iproute2
-        # build_socat
+        ## build_socat
         # build_qemu
         # build_libvirt
-        # build_dmidecode
+        ## build_dmidecode
         # build_unionfs
         # build_gorocksdb
-        # build_eudev
-        # build_kmod
+        build_eudev
+        ## build_kmod
         # build_openssh
-        # build_smartmon
-        # build_netcat
+        ## build_smartmon
+        ## build_netcat
     fi
 
     if [[ $DO_ALL == 1 ]] || [[ $DO_ORK == 1 ]]; then

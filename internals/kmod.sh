@@ -15,7 +15,8 @@ extract_kmod() {
 
 prepare_kmod() {
     echo "[+] preparing kmod"
-    ./configure --prefix=/ --with-xz --with-zlib
+    ./configure --prefix / --without-xz --with-zlib --build ${BUILDCOMPILE} --host ${BUILDHOST}
+    # ./configure --prefix=/ --with-xz --with-zlib --build ${BUILDCOMPILE} --host ${BUILDHOST}
 }
 
 compile_kmod() {

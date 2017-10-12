@@ -18,12 +18,12 @@ prepare_openssl() {
 
     # Setting custom CFLAGS, ensure shared library compiles
     export CFLAGS="-fPIC"
-    ./config --prefix=/usr shared
+    ./Configure dist --prefix=/usr
 }
 
 compile_openssl() {
     echo "[+] compiling openssl"
-    make ${MAKEOPTS}
+    make CC="${BUILDHOST}-gcc" AR="${BUILDHOST}-ar r" RANLIB="${BUILDHOST}-ranlib" ${MAKEOPTS}
 }
 
 install_openssl() {

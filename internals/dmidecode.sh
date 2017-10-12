@@ -19,7 +19,7 @@ prepare_dmidecode() {
 
 compile_dmidecode() {
     echo "[+] compiling dmidecode"
-    make ${MAKEOPTS}
+    make CC=${BUILDHOST}-gcc ${MAKEOPTS}
 }
 
 install_dmidecode() {
