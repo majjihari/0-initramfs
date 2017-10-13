@@ -573,17 +573,17 @@ main() {
         ## build_parted
         ## build_linuxutil
         # build_btrfs
-        # build_zerotier
-        # build_dnsmasq
+        ## build_zerotier
+        ## build_dnsmasq
         ## build_nftables
         # build_iproute2
         ## build_socat
         # build_qemu
         # build_libvirt
         ## build_dmidecode
-        # build_unionfs
+        ## build_unionfs
         # build_gorocksdb
-        build_eudev
+        ## build_eudev
         ## build_kmod
         # build_openssh
         ## build_smartmon

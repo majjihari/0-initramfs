@@ -18,7 +18,7 @@ prepare_dnsmasq() {
 }
 
 compile_dnsmasq() {
-    make ${MAKEOPTS}
+    make CC=${BUILDHOST}-gcc ${MAKEOPTS}
 }
 
 install_dnsmasq() {

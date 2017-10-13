@@ -18,7 +18,7 @@ prepare_zerotier() {
 }
 
 compile_zerotier() {
-    make one ${MAKEOPTS}
+    make one CC=${BUILDHOST}-gcc CXX=${BUILDHOST}-g++ STRIP=${BUILDHOST}-strip ${MAKEOPTS}
 }
 
 install_zerotier() {

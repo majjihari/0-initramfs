@@ -20,7 +20,7 @@ dependencies() {
 initramdeps() {
     # xsltproc: eudev
     # autopoint: netcat6
-    apt-get install -y pkg-config m4 bison flex autoconf libtool autogen autopoint xsltproc
+    apt-get install -y pkg-config m4 bison flex autoconf libtool autogen autopoint xsltproc gperf
 }
 
 toolchain() {
@@ -215,13 +215,6 @@ usertools() {
     ./configure --prefix ${BUILD_ROOT} --build=${BUILD_HOST} --host=${BUILD_ARCH}
     make ${MAKEOPTS}
     make install install-libs
-    popd
-
-    # -- eudev
-    pushd gperf-3.1
-    ./configure --prefix ${BUILD_ROOT} --build=${BUILD_HOST} --host=${BUILD_ARCH}
-    make ${MAKEOPTS}
-    make install
     popd
 
     # -- parted

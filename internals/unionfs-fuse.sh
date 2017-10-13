@@ -19,7 +19,10 @@ prepare_unionfs() {
 
 compile_unionfs() {
     echo "[+] compiling unionfs-fuse"
-    make ${MAKEOPTS}
+    PKG_CONFIG_PATH=${ROOTDIR}/usr/lib/pkgconfig/ \
+    CFLAGS=-I${ROOTDIR}/usr/include \
+    LDFLAGS=-L${ROOTDIR}/usr/lib \
+        make CC=${BUILDHOST}-gcc ${MAKEOPTS}
 }
 
 install_unionfs() {
