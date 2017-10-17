@@ -19,7 +19,10 @@ dependencies() {
 
 initramdeps() {
     # xsltproc: eudev
+    # gperf: eudev
     # autopoint: netcat6
+    # bison:
+    # flex:
     apt-get install -y pkg-config m4 bison flex autoconf libtool autogen autopoint xsltproc gperf
 }
 
@@ -134,7 +137,7 @@ usertools() {
     # wget -c http://ftp.gnu.org/pub/gnu/gettext/gettext-0.19.tar.gz
     wget -c http://download.savannah.gnu.org/releases/attr/attr-2.4.47.src.tar.gz
     wget -c https://www.kernel.org/pub/linux/libs/security/linux-privs/libcap2/libcap-2.24.tar.xz
-    wget -c https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-24.tar.gz
+    # wget -c https://www.kernel.org/pub/linux/utils/kernel/kmod/kmod-24.tar.gz
     # wget -c https://www.kernel.org/pub/linux/utils/util-linux/v2.30/util-linux-2.30.2.tar.xz
     wget -c https://www.kernel.org/pub/linux/kernel/people/tytso/e2fsprogs/v1.43.6/e2fsprogs-1.43.6.tar.xz
     wget -c https://zlib.net/zlib-1.2.11.tar.xz
@@ -145,7 +148,7 @@ usertools() {
     # tar -xvf gettext-0.19.tar.gz
     tar -xvf attr-2.4.47.src.tar.gz
     tar -xvf libcap-2.24.tar.xz
-    tar -xvf kmod-24.tar.gz
+    # tar -xvf kmod-24.tar.gz
     # tar -xvf util-linux-2.30.2.tar.xz
     tar -xvf e2fsprogs-1.43.6.tar.xz
     tar -xvf zlib-1.2.11.tar.xz
@@ -153,16 +156,14 @@ usertools() {
     tar -xvf ncurses-6.0.tar.gz
     tar -xvf gperf-3.1.tar.gz
 
-    ## ## maybe drop ?
-    ## pushd gettext-0.19
-    ## ./configure --prefix ${BUILD_PREFIX} --build=${BUILD_HOST} --host=${BUILD_ARCH} \
-    ##     --disable-libasprintf \
-    ##     --disable-java
-    ##
-    ## make -j 5
-    ## make install
-    ## popd
-    ## ##
+    # pushd gettext-0.19
+    # ./configure --prefix ${BUILD_PREFIX} --build=${BUILD_HOST} --host=${BUILD_ARCH} \
+    #     --disable-libasprintf \
+    #     --disable-java
+    #
+    # make -j 5
+    # make install
+    # popd
 
     pushd zlib-1.2.11
     export CC=${BUILD_ARCH}-gcc
@@ -178,6 +179,7 @@ usertools() {
     make install
     popd
 
+    # -- libcap
     pushd attr-2.4.47
     ./configure --prefix ${BUILD_ROOT} --build=${BUILD_HOST} --host=${BUILD_ARCH} --enable-gettext=no
     make ${MAKEOPTS}
@@ -189,26 +191,26 @@ usertools() {
 
     popd
 
+    # -- core0
     pushd libcap-2.24
     make BUILD_CC=gcc CC=${BUILD_ARCH}-gcc AR=${BUILD_ARCH}-ar
     make prefix=${BUILD_ROOT} BUILD_CC=gcc CC=${BUILD_ARCH}-gcc AR=${BUILD_ARCH}-ar RAISE_SETFCAP=no install
     cp -rv ${BUILD_ROOT}/lib64/* ${BUILD_ROOT}/lib/
     popd
 
-    pushd kmod-24
-    ./configure --prefix ${BUILD_ROOT} --build=${BUILD_HOST} --host=${BUILD_ARCH} \
-        --enable-shared \
-        --disable-static \
-        --enable-tools \
-        --disable-debug \
-        --disable-gtk-doc \
-        --without-xz \
-        --without-zlib \
-        --disable-python
-
-    make ${MAKEOPTS}
-    make install
-    popd
+    # pushd kmod-24
+    # ./configure --prefix ${BUILD_ROOT} --build=${BUILD_HOST} --host=${BUILD_ARCH} \
+    #     --enable-shared \
+    #     --disable-static \
+    #     --enable-tools \
+    #     --disable-debug \
+    #     --disable-gtk-doc \
+    #     --without-xz \
+    #     --without-zlib \
+    #     --disable-python
+    # make ${MAKEOPTS}
+    # make install
+    # popd
 
     # -- btrfs
     pushd e2fsprogs-1.43.6
