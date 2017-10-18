@@ -16,14 +16,22 @@ extract_openssl() {
 prepare_openssl() {
     echo "[+] preparing openssl"
 
-    # Setting custom CFLAGS, ensure shared library compiles
+    export CC="${BUILDHOST}-gcc"
+    export AR="${BUILDHOST}-ar r"
+    export RANLIB="${BUILDHOST}-ranlib"
     export CFLAGS="-fPIC"
-    ./Configure dist --prefix=/usr
+
+    if [[ "${BUILDARCH}" == arm* ]]; then
+        ./Configure shared --prefix=/usr linux-armv4
+    else
+        # FIXME: improve support
+        ./Configure shared --prefix=/usr linux-x86_64
+    fi
 }
 
 compile_openssl() {
     echo "[+] compiling openssl"
-    make CC="${BUILDHOST}-gcc" AR="${BUILDHOST}-ar r" RANLIB="${BUILDHOST}-ranlib" ${MAKEOPTS}
+    make ${MAKEOPTS}
 }
 
 install_openssl() {
@@ -34,6 +42,9 @@ install_openssl() {
 
     # Cleaning CFLAGS
     unset CFLAGS
+    unset CC
+    unset AR
+    unset RANLIB
 }
 
 build_openssl() {

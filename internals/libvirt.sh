@@ -74,6 +74,11 @@ install_libvirt() {
 }
 
 build_libvirt() {
+    if [ "${BUILDARCH}" != "x86_64" ]; then
+        echo "[-] qemu disabled (only build on amd64)"
+        return
+    fi
+
     pushd "${WORKDIR}/libvirt-${LIBVIRT_VERSION}"
 
     prepare_libvirt

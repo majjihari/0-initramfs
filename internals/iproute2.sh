@@ -1,5 +1,5 @@
-IPROUTE2_VERSION="4.8.0"
-IPROUTE2_CHECKSUM="54c6411863cb16a4375aa5f788dca767"
+IPROUTE2_VERSION="4.13.0"
+IPROUTE2_CHECKSUM="69dc9e3ece3296890278f0de478330c8"
 IPROUTE2_LINK="https://www.kernel.org/pub/linux/utils/net/iproute2/iproute2-${IPROUTE2_VERSION}.tar.xz"
 
 download_iproute2() {
@@ -15,7 +15,13 @@ extract_iproute2() {
 
 prepare_iproute2() {
     echo "[+] preparing iproute2"
-    ./configure
+
+    export CC="${BUILDHOST}-gcc"
+    export AR="${BUILDHOST}-ar"
+    export RANLIB="${BUILDHOST}-ranlib"
+
+    PKG_CONFIG_PATH=${ROOTDIR}/lib/pkgconfig/ \
+      ./configure ${ROOTDIR}/usr/include
 }
 
 compile_iproute2() {

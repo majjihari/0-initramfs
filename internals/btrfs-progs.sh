@@ -16,7 +16,9 @@ extract_btrfs() {
 prepare_btrfs() {
     echo "[+] configuring btrfs-progs"
     PKG_CONFIG_PATH=/usr/local/armv6j-hardfloat-linux-gnueabi/lib/pkgconfig/ \
-    ./configure --prefix /usr --disable-documentation --build ${BUILDCOMPILE} --host ${BUILDHOST}
+    CFLAGS="-I${ROOTDIR}/usr/include" \
+    LDFLAGS="-L${ROOTDIR}/usr/lib" \
+      ./configure --prefix /usr --disable-documentation --build ${BUILDCOMPILE} --host ${BUILDHOST}
 }
 
 compile_btrfs() {

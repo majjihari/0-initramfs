@@ -30,17 +30,17 @@ prepare_openssh() {
         --without-shadow \
         --disable-strip \
         --with-privsep-user=root \
-        --with-ssl-dir="${ROOTDIR}"
+        --with-ssl-dir="${ROOTDIR}/usr"
 }
 
 compile_openssh() {
     echo "[+] compiling openssh"
-    make ${MAKEOPTS}
+    make CC=${BUILDHOST}-gcc ${MAKEOPTS}
 }
 
 install_openssh() {
     echo "[+] installing openssh"
-    make DESTDIR="${ROOTDIR}" install
+    make DESTDIR="${ROOTDIR}" install-nokeys
 
     mkdir -p -m 700 "${ROOTDIR}"/root/.ssh
 

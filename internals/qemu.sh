@@ -38,6 +38,11 @@ install_qemu() {
 }
 
 build_qemu() {
+    if [ "${BUILDARCH}" != "x86_64" ]; then
+        echo "[-] qemu disabled (only build on amd64)"
+        return
+    fi
+
     pushd "${WORKDIR}/qemu-${QEMU_VERSION}"
 
     prepare_qemu

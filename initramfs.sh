@@ -18,6 +18,7 @@ BUILDCOMPILE="x86_64-linux-gnu"
 
 # architechture result will run on (--host option during configure script)
 BUILDHOST="armv6j-hardfloat-linux-gnueabi"
+BUILDARCH="armv6j"
 
 # By default, we compiles with (number of cpu threads + 1)
 # you can changes this to reduce computer load
@@ -568,15 +569,15 @@ main() {
 
     if [[ $DO_ALL == 1 ]] || [[ $DO_TOOLS == 1 ]]; then
         ## build_fuse
-        ### build_openssl
+        ## build_openssl
         ## build_certs
         ## build_parted
         ## build_linuxutil
-        # build_btrfs
+        ## build_btrfs
         ## build_zerotier
         ## build_dnsmasq
         ## build_nftables
-        # build_iproute2
+        ## build_iproute2
         ## build_socat
         # build_qemu
         # build_libvirt
@@ -585,7 +586,7 @@ main() {
         # build_gorocksdb
         ## build_eudev
         ## build_kmod
-        # build_openssh
+        ## build_openssh
         ## build_smartmon
         ## build_netcat
     fi
