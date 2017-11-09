@@ -583,7 +583,7 @@ main() {
         # build_libvirt
         ## build_dmidecode
         ## build_unionfs
-        # build_gorocksdb
+        build_gorocksdb
         ## build_eudev
         ## build_kmod
         ## build_openssh

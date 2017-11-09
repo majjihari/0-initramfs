@@ -1,6 +1,6 @@
-ROCKSDB_VERSION="2e64f450dc73104f3ba56651e82abf35ef59f74e"
-ROCKSDB_CHECKSUM="c6f5e96755d5999d5a9d69ca8cc1e6a2"
-ROCKSDB_LINK="https://github.com/facebook/rocksdb/archive/${ROCKSDB_VERSION}.tar.gz"
+ROCKSDB_VERSION="5.8"
+ROCKSDB_CHECKSUM="44e3a4c3234ba715aae215488ee79bae"
+ROCKSDB_LINK="https://github.com/facebook/rocksdb/archive/v${ROCKSDB_VERSION}.tar.gz"
 
 download_gorocksdb() {
     download_file $ROCKSDB_LINK $ROCKSDB_CHECKSUM rocksdb-${ROCKSDB_VERSION}.tar.gz
@@ -19,6 +19,28 @@ prepare_rocksdb() {
 
 compile_rocksdb() {
     echo "[+] compiling rocksdb"
+
+    export CC=${BUILDHOST}-gcc
+    export CXX=${BUILDHOST}-g++
+    export LDFLAGS="-L${ROOTDIR}/usr/lib"
+
+    case ${BUILDARCH} in
+        armv6*)
+            export TARGET_ARCHITECTURE=armv6
+            export CFLAGS="-I${ROOTDIR}/usr/include -march=${BUILDARCH}"
+            ;;
+
+        armv7*)
+            export TARGET_ARCHITECTURE=armv7
+            export CFLAGS="-I${ROOTDIR}/usr/include -march=${BUILDARCH}"
+            ;;
+
+        *)
+            # export TARGET_ARCHITECTURE=
+            export CFLAGS="-I${ROOTDIR}/usr/include"
+            ;;
+    esac
+
     PORTABLE=1 make ${MAKEOPTS} shared_lib
 }
 
@@ -29,15 +51,23 @@ install_rocksdb() {
 
 prepare_gorocksdb() {
     echo "[+] preparing gorocksdb"
-
-    CGO_CFLAGS="-I${WORKDIR}/rocksdb-${ROCKSDB_VERSION}/include" \
-    CGO_LDFLAGS="-L${WORKDIR}/rocksdb-${ROCKSDB_VERSION} -lrocksdb -lstdc++ -lm -lz -lbz2 -lsnappy -llz4" \
-      go get -v github.com/tecbot/gorocksdb
+    go get -d -v github.com/tecbot/gorocksdb
 }
 
 compile_gorocksdb() {
     echo "[+] compiling gorocksdb"
-    # make ${MAKEOPTS}
+
+    export CGO_CFLAGS="-I${WORKDIR}/rocksdb-${ROCKSDB_VERSION}/include"
+    # export CGO_LDFLAGS="-L${ROOTDIR}/usr/lib -lrocksdb -lstdc++ -lm -lz -lbz2 -lsnappy -llz4"
+    export CGO_LDFLAGS="-L${ROOTDIR}/usr/lib -lrocksdb -lstdc++ -lm -lz -lsnappy -llz4 -lbz2"
+    export CC=${BUILDHOST}-gcc
+    export CXX=${BUILDHOST}-g++
+    export GOOS=linux
+    export GOARCH=arm
+
+    export GODEBUG=cgocheck=1
+
+    go build
 }
 
 install_gorocksdb() {
@@ -51,8 +81,10 @@ build_gorocksdb() {
     compile_rocksdb
     install_rocksdb
 
-    # we stays on rocksdb directory
-    # it's used for building gorocksdb
+    popd
+
+    pushd "${GOPATH}/src/github.com/tecbot/gorocksdb"
+
     prepare_gorocksdb
     compile_gorocksdb
     install_gorocksdb
