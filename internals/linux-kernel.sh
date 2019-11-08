@@ -49,6 +49,24 @@ compile_kernel() {
         echo "[+] compiling the kernel (vmlinuz)"
         make ${MAKEOPTS}
     fi
+
+    if [[ $DO_ALL == 1 ]] || [[ $DO_ROOTFS == 1 ]]; then
+        pushd ${ROOTDIR}
+
+        # cleaning previous image
+        rm -f "${WORKDIR}"/zosv2-initramfs.cpio
+        rm -f "${WORKDIR}"/zosv2-initramfs.cpio.xz
+
+        # listing all files and building cpio image
+        echo "[+] building initramfs image"
+        find . 2> /dev/null | cpio --quiet -H newc -o > "${WORKDIR}"/zosv2-initramfs.cpio
+
+        # compressing image
+        echo "[+] compressing initramfs image"
+        xz -k -C crc32 -z -9 -T0 -M40% "${WORKDIR}"/zosv2-initramfs.cpio
+
+        popd
+    fi
 }
 
 install_kernel() {

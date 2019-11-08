@@ -26,7 +26,7 @@ MAKEOPTS="-j ${JOBS}"
 #
 # Flags
 #
-OPTS=$(getopt -o adbtckMeolmnzrh --long all,download,busybox,tools,cores,kernel,modules,extensions,ork,clean,mrproper,nomirror,compact,release,help -n 'parse-options' -- "$@")
+OPTS=$(getopt -o adbtckMReolmnzrh --long all,download,busybox,tools,cores,kernel,rootfs,modules,extensions,ork,clean,mrproper,nomirror,compact,release,help -n 'parse-options' -- "$@")
 if [ $? != 0 ]; then
     echo "Failed parsing options." >&2
     exit 1
@@ -49,6 +49,7 @@ if [ "$OPTS" != " --" ] && [ "$OPTS" != " --release --" ]; then
     DO_MRPROPER=0
     DO_ORK=0
     DO_COMPACT=0
+    DO_ROOTFS=0
 
     eval set -- "$OPTS"
 fi
@@ -61,6 +62,7 @@ while true; do
         -t | --tools)      DO_TOOLS=1;          shift ;;
         -c | --cores)      DO_CORES=1;          shift ;;
         -k | --kernel)     DO_KERNEL=1;         shift ;;
+        -R | --rootfs)     DO_ROOTFS=1;         shift ;;
         -M | --modules)    DO_KMODULES=1;       shift ;;
         -e | --extensions) DO_EXTENSIONS=1;     shift ;;
         -o | --ork)        DO_ORK=1;            shift ;;
@@ -76,7 +78,8 @@ while true; do
             echo " -b --busybox     only (re)build busybox"
             echo " -t --tools       only (re)build tools (ssl, fuse, ...)"
             echo " -c --cores       only (re)build core0 and coreX"
-            echo " -k --kernel      only (re)build kernel (vmlinuz, produce final image)"
+            echo " -k --kernel      only (re)build kernel (vmlinuz)"
+            echo " -R --rootfs      only (re)compress root image (initramfs, final image)"
             echo " -M --modules     only (re)build kernel modules"
             echo " -e --extensions  only (re)build extensions"
             echo " -o --ork         only (re)build ork protection"
@@ -553,10 +556,13 @@ get_size() {
 end_summary() {
     root_size=$(get_size "${ROOTDIR}")
     kernel_size=$(get_size "${WORKDIR}"/vmlinuz.efi)
+    rawrootfs_size=$(get_size "${WORKDIR}"/zosv2-initramfs.cpio)
+    rootfs_size=$(get_size "${WORKDIR}"/zosv2-initramfs.cpio.xz)
 
     success "[+] --- initramfs ready ---"
-    echo "[+] initramfs root size: $root_size"
     echo "[+] kernel size: $kernel_size"
+    echo "[+] root directory: $root_size"
+    echo "[+] initramfs size: $rootfs_size ($rawrootfs_size)"
 }
 
 #
@@ -674,7 +680,7 @@ main() {
         build_extensions
     fi
 
-    if [[ $DO_ALL == 1 ]] || [[ $DO_KERNEL == 1 ]] || [[ $DO_KMODULES == 1 ]]; then
+    if [[ $DO_ALL == 1 ]] || [[ $DO_KERNEL == 1 ]] || [[ $DO_KMODULES == 1 ]] || [[ $DO_ROOTFS == 1 ]]; then
         ensure_libs
         clean_root
         optimize_size
