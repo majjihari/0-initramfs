@@ -7,7 +7,7 @@ WIREGUARD_MODULES_LINK="https://git.zx2c4.com/wireguard-linux-compat/snapshot/wi
 
 download_wireguard() {
     download_file $WIREGUARD_TOOLS_LINK $WIREGUARD_TOOLS_CHECKSUM
-    download_file $WIREGUARD_MODULES_LINK $WIREGUARD_MODULES_CHECKSUM
+    # download_file $WIREGUARD_MODULES_LINK $WIREGUARD_MODULES_CHECKSUM
 }
 
 extract_wireguard() {
@@ -16,16 +16,16 @@ extract_wireguard() {
         tar -xf ${DISTFILES}/wireguard-tools-${WIREGUARD_TOOLS_VERSION}.tar.xz -C .
     fi
 
-    if [ ! -d "wireguard-linux-compat-${WIREGUARD_MODULES_VERSION}" ]; then
-        echo "[+] extracting: wireguard-linux-compat-${WIREGUARD_MODULES_VERSION}"
-        tar -xf ${DISTFILES}/wireguard-linux-compat-${WIREGUARD_MODULES_VERSION}.tar.xz -C .
-    fi
+    # if [ ! -d "wireguard-linux-compat-${WIREGUARD_MODULES_VERSION}" ]; then
+    #    echo "[+] extracting: wireguard-linux-compat-${WIREGUARD_MODULES_VERSION}"
+    #    tar -xf ${DISTFILES}/wireguard-linux-compat-${WIREGUARD_MODULES_VERSION}.tar.xz -C .
+    # fi
 }
 
 prepare_wireguard_modules() {
-    echo "[+] preparing wireguard (kernel module)"
+    echo "[+] preparing wireguard (kernel module upstream)"
     # link wireguard directory into kernel tree
-    ./kernel-tree-scripts/jury-rig.sh ${WORKDIR}/linux-${KERNEL_VERSION}
+    # ./kernel-tree-scripts/jury-rig.sh ${WORKDIR}/linux-${KERNEL_VERSION}
 }
 
 compile_wireguard_tools() {
@@ -39,9 +39,9 @@ install_wireguard_tools() {
 }
 
 build_wireguard() {
-    pushd "${WORKDIR}/wireguard-linux-compat-${WIREGUARD_MODULES_VERSION}"
-    prepare_wireguard_modules
-    popd
+    # pushd "${WORKDIR}/wireguard-linux-compat-${WIREGUARD_MODULES_VERSION}"
+    # prepare_wireguard_modules
+    # popd
 
     pushd "${WORKDIR}/wireguard-tools-${WIREGUARD_TOOLS_VERSION}/src"
     compile_wireguard_tools
