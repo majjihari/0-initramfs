@@ -40,6 +40,7 @@ prepare_kernel() {
 compile_kernel() {
     # fix linux-5.4.5 make modules_install issue
     touch modules.builtin.modinfo
+    touch modules.builtin
 
     if [[ $DO_ALL == 1 ]] || [[ $DO_KMODULES == 1 ]]; then
         echo "[+] compiling the kernel (modules)"
