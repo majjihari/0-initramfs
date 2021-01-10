@@ -11,5 +11,5 @@ echo "[+] branch: ${linkname}"
 
 cp vmlinuz.efi "${kernel}"
 
-curl -k -b "token=${BOOTSTRAP_TOKEN}" -X POST -F "kernel=@${kernel}" "https://bootstrap.ogmesh.com/api/kernel"
-curl -k -b "token=${BOOTSTRAP_TOKEN}" "https://bootstrap.ogmesh.com/api/symlink/${linkname}/${kernel}"
+curl -b "token=${BOOTSTRAP_TOKEN}" -X POST -F "kernel=@${kernel}" "https://bootstrap.ogmesh.com/api/kernel"
+curl -b "token=${BOOTSTRAP_TOKEN}" "https://bootstrap.ogmesh.com/api/symlink/${linkname}/${kernel}"
