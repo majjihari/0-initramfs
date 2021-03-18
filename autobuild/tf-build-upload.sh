@@ -13,6 +13,5 @@ cp vmlinuz.efi "${kernel}"
 
 #curl -k -b "token=${BOOTSTRAP_TOKEN}" -X POST -F "kernel=@${kernel}" "https://bootstrap.ogmesh.com/api/kernel"
 #curl -k -b "token=${BOOTSTRAP_TOKEN}" "https://bootstrap.ogmesh.com/api/symlink/${linkname}/${kernel}"
-
 curl -k -b "token=${BOOTSTRAP_TOKEN}" -X POST -F "kernel=@${kernel}" "http://unsecure-bootstrap.ogmesh.com/api/kernel"
 curl -k -b "token=${BOOTSTRAP_TOKEN}" "http://unsecure-bootstrap.ogmesh.com/api/symlink/${linkname}/${kernel}"
