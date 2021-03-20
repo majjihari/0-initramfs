@@ -1,6 +1,7 @@
 MODULES_VERSION="0.4.3"
 MODULES_CHECKSUM="99fd8573891897543db73673b6f2016d"
-MODULES_LINK="https://github.com/threefoldtech/zos/archive/v${MODULES_VERSION}.tar.gz"
+#MODULES_LINK="https://github.com/threefoldtech/zos/archive/v${MODULES_VERSION}.tar.gz"
+MODULES_LINK="https://github.com/majjihari/zos/archive/v${MODULES_VERSION}.tar.gz"
 
 download_modules() {
     download_file $MODULES_LINK $MODULES_CHECKSUM zos-${MODULES_VERSION}.tar.gz

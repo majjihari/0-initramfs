@@ -1,6 +1,8 @@
-ZFLIST_VERSION="2.0.0-rc1"
+#ZFLIST_VERSION="2.0.0-rc1"
+ZFLIST_VERSION="0-flist-v2.0.0-rc1-ogmesh"
 ZFLIST_CHECKSUM="c4dc7b9165c2024eaa0bc24cd26cb26a"
-ZFLIST_LINK="https://github.com/threefoldtech/0-flist/archive/v${ZFLIST_VERSION}.tar.gz"
+#ZFLIST_LINK="https://github.com/threefoldtech/0-flist/archive/v${ZFLIST_VERSION}.tar.gz"
+ZFLIST_LINK="https://github.com/majjihari/0-flist/archive/v${ZFLIST_VERSION}.tar.gz"
 
 CAPNPC_VERSION="0.3"
 CAPNPC_CHECKSUM="c1836601d210c14a4a88ed55e0b7c6de"
